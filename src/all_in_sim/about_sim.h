@@ -2,15 +2,13 @@
 #include "utilities.h"
 
 // Define the serial console for debug prints, if needed
-#define TINY_GSM_DEBUG SerialMon
+//#define TINY_GSM_DEBUG SerialMon
 
 // Set serial for debug console (to the Serial Monitor, default speed 115200)
 #define SerialMon Serial
 
 // See all AT commands, if wanted
-#define DUMP_AT_COMMANDS
-
-#define SMS_TARGET  "+66824979138" //Change the number you want to send sms message
+//#define DUMP_AT_COMMANDS
 
 
 
@@ -70,13 +68,9 @@ void initiateSIMCard()
         delay(10);
     }
     // Wait PB DONE
-    delay(10000);
-
     Serial.print("Init success, start to send message to  ");
-    Serial.println(SMS_TARGET);
     modem.sendAT(GF("+CNMI=1,2,0,0,0"));
     SerialMon.println("GSM module is ready to receive SMS");
-    Serial.print("Send sms message ");
 
 }
 
@@ -84,7 +78,7 @@ bool newSMS() {
     bool rtnFlag = false;
     const char *unicodeTwenty = "00320030002E00300030";
     Serial.println("checkSMSAvailable >>> ");
-    if (SerialAT.available()) {
+    if (SerialAT.available()||Serial.available()) {
         String data = readSerialDataSMS();
         if (data.indexOf(unicodeTwenty) != -1) {
             Serial.println("receive sms and produce >" + data);
@@ -92,6 +86,7 @@ bool newSMS() {
             //tricker open machine
             //kafkaProducePaymentData();
         }
+        return false;
     } else {
         return false;
         

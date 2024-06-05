@@ -1,5 +1,5 @@
 
-#define TINY_GSM_MODEM_SIM900
+#define TINY_GSM_MODEM_SIM800
 #include "utilities.h"
 #include "about_sim.h"
 #include "about_machine.h"
@@ -11,17 +11,10 @@ void setup() {
 }
 void loop() {
 
-    if (SerialAT.available()) {
-        if(newSMS()){
-          Serial.println("SerialAT have new SMS");
-          digitalWritePulse20Bath();
-        }
-    }
-    if (Serial.available()) {
         if(newSMS()){
           digitalWritePulse20Bath();
-          Serial.println("Serial only have new SMS");
+          Serial.println("SerialAT only have new SMS");
         }
-    }
-    delay(3000); // delay 3S
+    //Serial.println("Serial only have new SMS");
+    delay(1000); // delay 3S
 }
