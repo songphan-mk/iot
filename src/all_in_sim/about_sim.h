@@ -76,7 +76,6 @@ void initiateSIMCard() {
 }
 
 bool newSMS() {
-//    bool rtnFlag = false;
     const char *unicodeTwenty = "00320030002E00300030"; // 20.00
     const char *receiveInThai = "0E230E310E1A0E420E2D0E19"; // รับโอน
 
