@@ -1,8 +1,8 @@
 
 #define TINY_GSM_MODEM_SIM800
-#include "utilities.h"
-#include "about_sim.h"
-#include "about_machine.h"
+#include "all_in_sim/utilities.h"
+#include "all_in_sim/about_sim.h"
+#include "all_in_sim/about_machine.h"
 
 
 void setup() {
@@ -15,6 +15,6 @@ void loop() {
           digitalWritePulse20Bath();
           Serial.println("SerialAT only have new SMS");
         }
-    //Serial.println("Serial only have new SMS");
+
     delay(1000); // delay 3S
 }

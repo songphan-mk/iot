@@ -32,8 +32,7 @@ String readSerialDataSMS() {
     return result;
 }
 
-void initiateSIMCard()
-{
+void initiateSIMCard() {
 
     // Turn on DC boost to power on the modem
 #ifdef BOARD_POWERON_PIN
@@ -43,8 +42,10 @@ void initiateSIMCard()
 
     // Set modem reset pin ,reset modem
     pinMode(MODEM_RESET_PIN, OUTPUT);
-    digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL); delay(100);
-    digitalWrite(MODEM_RESET_PIN, MODEM_RESET_LEVEL); delay(2600);
+    digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL);
+    delay(100);
+    digitalWrite(MODEM_RESET_PIN, MODEM_RESET_LEVEL);
+    delay(2600);
     digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL);
 
     // Turn on modem
@@ -75,22 +76,27 @@ void initiateSIMCard()
 }
 
 bool newSMS() {
-    bool rtnFlag = false;
-    const char *unicodeTwenty = "00320030002E00300030";
+//    bool rtnFlag = false;
+    const char *unicodeTwenty = "00320030002E00300030"; // 20.00
+    const char *receiveInThai = "0E230E310E1A0E420E2D0E19"; // รับโอน
+
     Serial.println("checkSMSAvailable >>> ");
-    if (SerialAT.available()||Serial.available()) {
-        String data = readSerialDataSMS();
-        if (data.indexOf(unicodeTwenty) != -1) {
-            Serial.println("receive sms and produce >" + data);
+    String data = readSerialDataSMS();
+    if (!data.isEmpty()) {
+        Serial.println("receive sms and produce >" + data);
+        bool isTextMatched = data.indexOf(unicodeTwenty) != -1 &&
+                             data.indexOf(receiveInThai) != -1;
+        if (isTextMatched) {
+            Serial.println("Message matched 20.00");
             return true;
             //tricker open machine
             //kafkaProducePaymentData();
         }
-        return false;
-    } else {
-        return false;
-        
     }
+
+
+//    }
+    return false;
 
 }
 
