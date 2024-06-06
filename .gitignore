@@ -1,5 +1,6 @@
 #Cmake build debug folder
 cmake-build-debug/
+.pio/
 
 #IDE
 .idea/
