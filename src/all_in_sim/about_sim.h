@@ -76,25 +76,27 @@ void initiateSIMCard() {
 }
 
 bool newSMS() {
-    const char *unicodeTwenty = "00320030002E00300030"; // 20.00
-    const char *receiveInThai = "0E230E310E1A0E420E2D0E19"; // รับโอน
+    String unicodeTwenty = "00320030002E00300030"; // 20.00
+    String receiveTransferInThai = "0E230E310E1A0E420E2D0E19"; // รับโอน Kbank
+    String receivedMoneyInThai = "0E400E070E340E190E400E020E490E32"; // เงินเข้า BBL and Kbank
 
     Serial.println("checkSMSAvailable >>> ");
+
     String data = readSerialDataSMS();
     if (!data.isEmpty()) {
         Serial.println("receive sms and produce >" + data);
-        bool isTextMatched = data.indexOf(unicodeTwenty) != -1 &&
-                             data.indexOf(receiveInThai) != -1;
+
+        bool isTransferInThaiOrMoneyInThaiMatched = data.indexOf(receiveTransferInThai) != -1 ||
+                data.indexOf(receivedMoneyInThai) != -1;
+        bool isTextMatched = data.indexOf(unicodeTwenty) != -1 && isTransferInThaiOrMoneyInThaiMatched;
+
         if (isTextMatched) {
             Serial.println("Message matched 20.00");
             return true;
-            //tricker open machine
             //kafkaProducePaymentData();
         }
     }
 
-
-//    }
     return false;
 
 }
