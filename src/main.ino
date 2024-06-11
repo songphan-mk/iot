@@ -10,6 +10,7 @@
 void setup() {
     Serial.begin(115200);
     pinMode(ESP_PINOUT, OUTPUT);
+    digitalWrite(ESP_PINOUT, HIGH);
     initiateSIMCard();
 }
 

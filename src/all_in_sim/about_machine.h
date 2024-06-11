@@ -3,14 +3,15 @@
 void digitalWritePulse20Bath() {
 
     for (int i = 0; i <= 19; i++) {
-        digitalWrite(PULSE_OUT, HIGH);
+        digitalWrite(PULSE_OUT, LOW);
         delay(80);
 
-        digitalWrite(PULSE_OUT, LOW);
+        digitalWrite(PULSE_OUT, HIGH);
         delay(100);
 
-        digitalWrite(PULSE_OUT, HIGH);
     }
+        digitalWrite(PULSE_OUT, HIGH);
+
 }
 void digitalWritePulse30Bath() {
 
