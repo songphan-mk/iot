@@ -4,14 +4,16 @@
 #include "all_in_sim/utilities.h"
 #include "all_in_sim/about_sim.h"
 #include "all_in_sim/about_machine.h"
+#include "all_in_sim/about_wifi.h"
 
-#define ESP_PINOUT                      (0)
+#define ESP_PINOUT (0)
 
 void setup() {
     Serial.begin(115200);
     pinMode(ESP_PINOUT, OUTPUT);
     digitalWrite(ESP_PINOUT, HIGH);
     initiateSIMCard();
+    initiateWifi();
 }
 
 void loop() {

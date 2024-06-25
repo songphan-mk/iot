@@ -1,4 +1,6 @@
 #include <TinyGsmClient.h>
+#include "about_message_queue.h"
+
 #include "utilities.h"
 
 // Define the serial console for debug prints, if needed
@@ -92,8 +94,8 @@ bool newSMS() {
 
         if (isTextMatched) {
             Serial.println("Message matched 20.00");
+//            kafkaProducePaymentData();
             return true;
-            //kafkaProducePaymentData();
         }
     }
 
