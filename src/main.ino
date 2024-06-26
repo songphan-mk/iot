@@ -13,7 +13,6 @@ void setup() {
     pinMode(ESP_PINOUT, OUTPUT);
     digitalWrite(ESP_PINOUT, HIGH);
     initiateSIMCard();
-    initiateWifi();
 }
 
 void loop() {

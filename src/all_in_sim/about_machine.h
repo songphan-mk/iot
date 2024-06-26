@@ -2,7 +2,7 @@
 
 void digitalWritePulse20Bath() {
 
-    for (int i = 0; i <= 19; i++) {
+    for (int i = 0; i <= 1; i++) {
         digitalWrite(PULSE_OUT, LOW);
         delay(80);
 
