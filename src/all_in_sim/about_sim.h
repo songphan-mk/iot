@@ -77,10 +77,21 @@ void initiateSIMCard() {
 
 }
 
-bool newSMS() {
+bool isPaymentMessageMatched(String message) {
     String unicodeTwenty = "00320030002E00300030"; // 20.00
     String receiveTransferInThai = "0E230E310E1A0E420E2D0E19"; // รับโอน Kbank
     String receivedMoneyInThai = "0E400E070E340E190E400E020E490E32"; // เงินเข้า BBL and Kbank
+    String forcedPaymentMessage = "PONGODDS"; // เงินเข้า BBL and Kbank
+    bool isTransferInThaiOrMoneyInThaiMatched = message.indexOf(receiveTransferInThai) != -1 ||
+                                                message.indexOf(receivedMoneyInThai) != -1;
+    bool isTextMatched = message.indexOf(unicodeTwenty) != -1 && isTransferInThaiOrMoneyInThaiMatched;
+    bool isForcedPayment = message.indexOf(forcedPaymentMessage) != -1;
+
+    return isTextMatched || isForcedPayment;
+
+}
+
+bool newSMS() {
 
     Serial.println("checkSMSAvailable >>> ");
 
@@ -88,18 +99,15 @@ bool newSMS() {
     if (!data.isEmpty()) {
         Serial.println("receive sms and produce >" + data);
 
-        bool isTransferInThaiOrMoneyInThaiMatched = data.indexOf(receiveTransferInThai) != -1 ||
-                data.indexOf(receivedMoneyInThai) != -1;
-        bool isTextMatched = data.indexOf(unicodeTwenty) != -1 && isTransferInThaiOrMoneyInThaiMatched;
-
-        if (isTextMatched) {
+        if (isPaymentMessageMatched(data)) {
             Serial.println("Message matched 20.00");
-//            kafkaProducePaymentData();
             return true;
         }
+
     }
 
     return false;
 
 }
+
 
