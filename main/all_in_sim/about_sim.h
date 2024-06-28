@@ -1,3 +1,4 @@
+#include "HardwareSerial.h"
 #include <TinyGsmClient.h>
 #include "about_message_queue.h"
 
@@ -81,19 +82,19 @@ bool isPaymentMessageMatched(String message) {
     String unicodeTwenty = "00320030002E00300030"; // 20.00
     String receiveTransferInThai = "0E230E310E1A0E420E2D0E19"; // รับโอน Kbank
     String receivedMoneyInThai = "0E400E070E340E190E400E020E490E32"; // เงินเข้า BBL and Kbank
-    String forcedPaymentMessage = "PONGODDS"; // เงินเข้า BBL and Kbank
+    String forcedPaymentMessage = "00410044004D0049004E0E420E2D0E19"; // ADMINโอน
     bool isTransferInThaiOrMoneyInThaiMatched = message.indexOf(receiveTransferInThai) != -1 ||
                                                 message.indexOf(receivedMoneyInThai) != -1;
     bool isTextMatched = message.indexOf(unicodeTwenty) != -1 && isTransferInThaiOrMoneyInThaiMatched;
     bool isForcedPayment = message.indexOf(forcedPaymentMessage) != -1;
-
+    Serial.println("<NORMAL>" +String(isTextMatched)+"<ADMIN>" +String(isForcedPayment));
     return isTextMatched || isForcedPayment;
 
 }
 
 bool newSMS() {
 
-    Serial.println("checkSMSAvailable >>> ");
+    //Serial.println("checkSMSAvailable >>> ");
 
     String data = readSerialDataSMS();
     if (!data.isEmpty()) {

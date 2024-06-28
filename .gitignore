@@ -1,6 +1,10 @@
 #Cmake build debug folder
 cmake-build-debug/
 .pio/
-
+.DS_Store
+.src/.DS_Store
+.src/main/
+.vscode/
+src/main/
 #IDE
 .idea/

@@ -16,7 +16,7 @@ void setup() {
 }
 
 void loop() {
-
+    
     if (newSMS()) {
         digitalWritePulse20Bath();
         Serial.println("SerialAT only have new SMS");
